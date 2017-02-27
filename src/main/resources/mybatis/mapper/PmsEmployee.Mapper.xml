@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.paipianwang.pat.facade.employee.service.dao.impl.PmsEmployeeDaoImpl">
+
+	<!-- 产品信息表 -->
+	<sql id="pms_employee"> EMPLOYEE </sql>
+	
+	<select id="doLogin" resultType="PmsEmployee">
+		SELECT e.EMPLOYEEID,
+			   e.EMPLOYEELOGINNAME,
+			   e.EMPLOYEEREALNAME,
+			   e.EMPLOYEEPASSWORD,
+			   e.EMPLOYEEDESCRIPTION,
+			   e.EMPLOYEEIMG,
+			   DATE_FORMAT(e.UPDATEDATE,'%Y-%m-%d %T') AS updateDate
+		FROM 
+		<include refid="pms_employee" /> e 
+	   <where>
+	   	   e.EMPLOYEELOGINNAME = #{loginName}
+		   AND e.EMPLOYEEPASSWORD = #{password}
+		   AND DIMISSIONSTATUS != 1
+	   </where>
+	</select>
+</mapper>
