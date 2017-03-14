@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.paipianwang.pat.facade.employee.service.dao.impl.PmsJobDaoImpl">
+
+	<!-- 产品信息表 -->
+	<sql id="pms_job"> JOBS </sql>
+	<select id="listPage" resultType="PmsJob">
+		SELECT j.JOBID AS jobId,
+			   j.JOBNAME AS jobName,
+			   j.JOBDESCRIPTION AS jobDescription,
+			   j.DEMAND AS demand,
+			   DATE_FORMAT(j.STARTDATE,'%Y-%m-%d %T') AS startDate,
+			   DATE_FORMAT(j.ENDDATE,'%Y-%m-%d %T') AS endDate,
+			   DATE_FORMAT(j.UPDATEDATE,'%Y-%m-%d %T') AS updateDate,
+			   DATE_FORMAT(j.CREATEDATE,'%Y-%m-%d %T') AS createDate
+		FROM <include refid="pms_job" /> j 
+		<where>
+			<if test="jobName != null and jobName != ''">
+				j.JOBNAME LIKE CONCAT(CONCAT('%',#{jobName}),'%')
+			</if>
+		</where>
+			ORDER BY
+		<if test="sort != null and sort != '' and order != null and order != ''">
+			 ${sort} ${order},
+		</if>
+			j.JOBID DESC
+			LIMIT ${begin} , ${limit}
+	</select>
+	<select id="listPageCount" resultType="java.lang.Long">
+		SELECT COUNT(1)
+		FROM 
+		<include refid="pms_job" /> j 
+		<where>
+			<if test="jobName != null and jobName != ''">
+				j.JOBNAME LIKE CONCAT(CONCAT('%',#{jobName}),'%')
+			</if>
+		</where>
+	</select>
+	<update id="update">
+		UPDATE 
+		<include refid="pms_job" />
+		<set>
+			JOBNAME = #{jobName},
+			JOBDESCRIPTION = #{jobDescription},
+			DEMAND = #{demand},
+			STARTDATE = #{startDate},
+			ENDDATE = #{endDate},
+			UPDATEDATE = CURRENT_TIMESTAMP
+		</set>
+		<where>
+			JOBID = #{jobId}
+		</where>
+	</update>
+	<insert id="save" useGeneratedKeys="true" keyProperty="jobId"
+		parameterType="PmsJob">
+		INSERT INTO 
+		<include refid="pms_job" /> 
+		(
+		   JOBNAME,
+		   JOBDESCRIPTION,
+		   DEMAND,
+		   STARTDATE,
+		   ENDDATE
+		)
+		VALUES 
+		(
+		   #{jobName},
+		   #{jobDescription},
+		   #{demand},
+		   #{startDate},
+		   #{endDate}
+		)
+	</insert>
+	<delete id="delete">
+		DELETE FROM 
+		<include refid="pms_job" /> 
+		<where>
+			JOBID = #{jobId}
+		</where>
+	</delete>
+	<select id="getAll" resultType="PmsJob">
+		SELECT j.JOBID AS jobId,
+		   j.JOBNAME AS jobName,
+		   j.JOBDESCRIPTION AS jobDescription,
+		   j.DEMAND AS demand,
+		   DATE_FORMAT(j.STARTDATE,'%Y-%m-%d %T') AS startDate,
+		   DATE_FORMAT(j.ENDDATE,'%Y-%m-%d %T') AS endDate,
+		   DATE_FORMAT(j.UPDATEDATE,'%Y-%m-%d %T') AS updateDate,
+		   DATE_FORMAT(j.CREATEDATE,'%Y-%m-%d %T') AS createDate
+		FROM 
+		<include refid="pms_job" />  j 
+	</select>
+	<select id="findJobById" resultType="PmsJob">
+		SELECT j.JOBID AS jobId,
+			   j.JOBNAME AS jobName,
+			   j.JOBDESCRIPTION AS jobDescription,
+			   j.DEMAND AS demand,
+			   DATE_FORMAT(j.STARTDATE,'%Y-%m-%d %T') AS startDate,
+			   DATE_FORMAT(j.ENDDATE,'%Y-%m-%d %T') AS endDate,
+			   DATE_FORMAT(j.UPDATEDATE,'%Y-%m-%d %T') AS updateDate,
+			   DATE_FORMAT(j.CREATEDATE,'%Y-%m-%d %T') AS createDate
+		FROM 
+		<include refid="pms_job" /> j 
+		<where>
+			j.JOBID = #{jobId}
+		</where>
+	</select>
+</mapper>
