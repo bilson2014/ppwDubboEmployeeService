@@ -17,7 +17,6 @@
 	<dubbo:protocol name="dubbo" port="27880" />
 		
 	<!-- 员工服务接口 -->
-	<dubbo:service interface="com.paipianwang.pat.facade.employee.service.PmsEmployeeFacade" ref="pmsEmployeeFacade"  />
 	<dubbo:service interface="com.paipianwang.pat.facade.employee.service.PmsStaffFacade" ref="pmsStaffFacade"  />
 	<dubbo:service interface="com.paipianwang.pat.facade.employee.service.PmsJobFacade" ref="pmsJobFacade"  />
 </beans>  
