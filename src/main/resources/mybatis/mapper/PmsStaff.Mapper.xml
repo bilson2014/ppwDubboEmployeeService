@@ -29,6 +29,7 @@
 		 s.OD ASC
 		LIMIT ${begin} , ${limit}
 	</select>
+	
 	<select id="listPageCount" resultType="java.lang.Long">
 		SELECT COUNT(1)
 		FROM 
@@ -39,6 +40,7 @@
 			</if>
 		</where>
 	</select>
+	
 	<insert id="save" useGeneratedKeys="true" keyProperty="staffId"
 		parameterType="PmsStaff">
 			INSERT INTO 
@@ -59,6 +61,7 @@
 				#{staffDescription}
 			 )
 	</insert>
+	
 	<update id="updateImagePath">
 		UPDATE 
 		<include refid="pms_staff" />
@@ -69,6 +72,7 @@
 			STAFFID = #{staffId}
 		</where>
 	</update>
+	
 	<update id="update">
 		UPDATE 
 		<include refid="pms_staff" />
@@ -84,6 +88,7 @@
 			STAFFID = #{staffId}
 		</where>
 	</update>
+	
 	<select id="findStaffsByArray" resultType="PmsStaff">
 		SELECT s.STAFFID AS staffId,
 			   s.STAFFNAME AS staffName,
