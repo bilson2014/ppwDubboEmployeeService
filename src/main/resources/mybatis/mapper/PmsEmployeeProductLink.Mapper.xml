@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.paipianwang.pat.facade.employee.service.dao.impl.PmsEmployeeProductLinkDaoImpl">
+
+	<!-- 产品信息表 -->
+	<sql id="pms_emp_pro_link"> EMPLOYEE_PRODUCT_RELATION_LINK </sql>
+	
+	<select id="findProductIdsByEmployeeId" resultType="Long">
+		SELECT ep.PRODUCTID
+		FROM 
+			<include refid="pms_emp_pro_link" /> ep
+		<where>
+			ep.EMPLOYEEID = #{employeeId}
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="PmsEmployeeProductLink">
+			INSERT INTO 
+			<include refid="pms_emp_pro_link" />
+			(
+			   EMPLOYEEID,
+			   PRODUCTID
+			)
+			VALUES
+			 (
+				${employeeId},
+				${productId}
+			 )
+	</insert>
+	
+	<delete id="deleteByEmployeeIdsAndproIds" parameterType="PmsEmployeeProductLink">
+		DELETE FROM 
+		<include refid="pms_emp_pro_link" />
+		<where>
+			<foreach collection="list" open="(" close=")" item="link"
+				separator="OR">
+				EMPLOYEEID = ${link.employeeId} AND PRODUCTID = ${link.productId}
+			</foreach>
+		</where>
+	</delete>
+	
+</mapper>

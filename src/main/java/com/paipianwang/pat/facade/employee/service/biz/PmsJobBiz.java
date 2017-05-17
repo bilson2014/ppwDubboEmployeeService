@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.paipianwang.pat.common.entity.DataGrid;
@@ -14,8 +14,7 @@ import com.paipianwang.pat.common.entity.PageParam;
 import com.paipianwang.pat.facade.employee.entity.PmsJob;
 import com.paipianwang.pat.facade.employee.service.dao.PmsJobDao;
 
-
-@Service
+@Component
 @Transactional
 public class PmsJobBiz {
 
