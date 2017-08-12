@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.paipianwang.pat.common.core.dao.impl.BaseDaoImpl;
+import com.paipianwang.pat.common.entity.MetaDataColumn;
 import com.paipianwang.pat.facade.employee.entity.PmsJob;
 import com.paipianwang.pat.facade.employee.service.dao.PmsJobDao;
 @Repository
@@ -38,4 +39,6 @@ public class PmsJobDaoImpl extends BaseDaoImpl<PmsJob> implements PmsJobDao {
 	public PmsJob findJobById(Long jobId) {
 		return sessionTemplate.selectOne(getStatement(SQL_FIND_JOB_BYID),jobId);
 	}
+	
+	
 }
